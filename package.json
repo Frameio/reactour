@@ -1,5 +1,5 @@
 {
-  "name": "reactour",
+  "name": "@frameio/reactour",
   "version": "1.8.2",
   "description": "Tourist Guide into your React Components",
   "main": "dist/index.js",
