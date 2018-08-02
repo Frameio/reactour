@@ -4,7 +4,8 @@ import * as hx from '../helpers'
 import PropTypes from 'prop-types'
 
 const SvgMaskWrapper = styled.div`
-  opacity: 0.7;
+  opacity: ${({ isOpen }) => (isOpen ? 0.7 : 0)};
+  transition: opacity 0.3s ease-in-out;
   width: 100%;
   left: 0;
   top: 0;
@@ -26,6 +27,7 @@ export default function SvgMask({
   disableInteraction,
   disableInteractionClassName,
   className,
+  isOpen,
 }) {
   const width = hx.safe(targetWidth + padding * 2)
   const height = hx.safe(targetHeight + padding * 2)
@@ -33,7 +35,7 @@ export default function SvgMask({
   const left = hx.safe(targetLeft - padding)
 
   return (
-    <SvgMaskWrapper>
+    <SvgMaskWrapper isOpen={isOpen}>
       <svg
         width={windowWidth}
         height={windowHeight}
@@ -108,52 +110,37 @@ export default function SvgMask({
             />
           </mask>
           <clipPath id="clip-path">
-            {/* top */}
-            <rect x={0} y={0} width={windowWidth} height={top} />
-            {/* left */}
-            <rect x={0} y={top} width={left} height={height} />
-            {/* right */}
             <rect
-              x={targetLeft + targetWidth + padding}
+              x={left}
               y={top}
-              width={hx.safe(windowWidth - targetWidth - left)}
+              width={width}
               height={height}
-            />
-            {/* bottom */}
-            <rect
-              x={0}
-              y={targetTop + targetHeight + padding}
-              width={windowWidth}
-              height={hx.safe(windowHeight - targetHeight - top)}
+              style={{ pointerEvents: 'none' }}
+              pointerEvents="auto"
+              fill="transparent"
+              clipRule="evenodd"
             />
           </clipPath>
         </defs>
         <rect
           x={0}
           y={0}
+          style={{ pointerEvents: 'none' }}
           width={windowWidth}
           height={windowHeight}
           fill="#000000"
           mask="url(#mask-main)"
+          clipPath="url(#clip-path)"
         />
         <rect
           x={0}
           y={0}
+          style={{ pointerEvents: 'none' }}
           width={windowWidth}
           height={windowHeight}
           fill="#000000"
-          clipPath="url(#clip-path)"
           pointerEvents="auto"
-        />
-        <rect
-          x={left}
-          y={top}
-          width={width}
-          height={height}
-          pointerEvents="auto"
-          fill="transparent"
-          display={disableInteraction ? 'block' : 'none'}
-          className={disableInteractionClassName}
+          display="none"
         />
       </svg>
     </SvgMaskWrapper>

@@ -425,40 +425,70 @@ class TourPortal extends Component {
     const currentStep = steps[current]
 
     return (
-      <Guide
-        isOpen={isOpen}
-        innerRef={this.guideRef}
-        targetHeight={targetHeight}
-        targetWidth={targetWidth}
-        targetTop={targetTop}
-        targetRight={targetRight}
-        targetBottom={targetBottom}
-        targetLeft={targetLeft}
-        windowWidth={windowWidth}
-        windowHeight={windowHeight}
-        helperWidth={helperWidth}
-        helperHeight={helperHeight}
-        helperPosition={helperPosition}
-        padding={maskSpace}
-        tabIndex={-1}
-        current={current}
-        style={currentStep.style ? currentStep.style : {}}
-        rounded={rounded}
-        className={cn(CN.helper.base, className, {
-          [CN.helper.isOpen]: isOpen,
-        })}
-        accentColor={accentColor}
-        pointer={pointer}
-      >
-        {typeof children === 'function'
-          ? children({
-              props: this.props,
-              state: this.state,
-              guideRef: this.guideRef,
-              maskRef: this.maskRef,
-            })
-          : children}
-      </Guide>
+      <React.Fragment>
+        <div
+          ref={this.maskRef}
+          onClick={this.maskClickHandler}
+          className={cn(CN.mask.base, {
+            [CN.mask.isOpen]: isOpen,
+          })}
+        >
+          <SvgMask
+            isOpen={isOpen}
+            windowWidth={windowWidth}
+            windowHeight={windowHeight}
+            targetWidth={targetWidth}
+            targetHeight={targetHeight}
+            targetTop={targetTop}
+            targetLeft={targetLeft}
+            padding={maskSpace}
+            rounded={rounded}
+            className={maskClassName}
+            disableInteraction={
+              disableInteraction && steps[current].stepInteraction
+                ? !steps[current].stepInteraction
+                : disableInteraction
+            }
+            disableInteractionClassName={`${
+              CN.mask.disableInteraction
+            } ${highlightedMaskClassName}`}
+          />
+        </div>
+        <Guide
+          isOpen={isOpen}
+          innerRef={this.guideRef}
+          targetHeight={targetHeight}
+          targetWidth={targetWidth}
+          targetTop={targetTop}
+          targetRight={targetRight}
+          targetBottom={targetBottom}
+          targetLeft={targetLeft}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
+          helperWidth={helperWidth}
+          helperHeight={helperHeight}
+          helperPosition={helperPosition}
+          padding={maskSpace}
+          tabIndex={-1}
+          current={current}
+          style={currentStep.style ? currentStep.style : {}}
+          rounded={rounded}
+          className={cn(CN.helper.base, className, {
+            [CN.helper.isOpen]: isOpen,
+          })}
+          accentColor={accentColor}
+          pointer={pointer}
+        >
+          {typeof children === 'function'
+            ? children({
+                props: this.props,
+                state: this.state,
+                guideRef: this.guideRef,
+                maskRef: this.maskRef,
+              })
+            : children}
+        </Guide>
+      </React.Fragment>
     )
   }
 }
