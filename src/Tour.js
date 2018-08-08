@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import ExecutionEnvironment from 'exenv'
 import TourPortal from './TourPortal'
-
-const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
-const SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {}
 
 function getParentElement(parentSelector) {
   return parentSelector()
@@ -15,7 +11,6 @@ class Tour extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     portalClassName: PropTypes.string,
-    appElement: PropTypes.instanceOf(SafeHTMLElement),
     onAfterOpen: PropTypes.func,
     onRequestClose: PropTypes.func,
     closeWithMask: PropTypes.bool,
