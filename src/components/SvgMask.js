@@ -110,37 +110,50 @@ export default function SvgMask({
             />
           </mask>
           <clipPath id="clip-path">
+            {/* top */}
+            <rect x={0} y={0} width={windowWidth} height={top} />
+            {/* left */}
+            <rect x={0} y={top} width={left} height={height} />
+            {/* right */}
             <rect
-              x={left}
+              x={targetLeft + targetWidth + padding}
               y={top}
-              width={width}
+              width={hx.safe(windowWidth - targetWidth - left)}
               height={height}
-              style={{ pointerEvents: 'none' }}
-              pointerEvents="auto"
-              fill="transparent"
-              clipRule="evenodd"
+            />
+            {/* bottom */}
+            <rect
+              x={0}
+              y={targetTop + targetHeight + padding}
+              width={windowWidth}
+              height={hx.safe(windowHeight - targetHeight - top)}
             />
           </clipPath>
         </defs>
         <rect
           x={0}
           y={0}
-          style={{ pointerEvents: 'none' }}
           width={windowWidth}
           height={windowHeight}
           fill="#000000"
           mask="url(#mask-main)"
-          clipPath="url(#clip-path)"
         />
         <rect
           x={0}
           y={0}
-          style={{ pointerEvents: 'none' }}
           width={windowWidth}
           height={windowHeight}
           fill="#000000"
-          pointerEvents="auto"
-          display="none"
+          clipPath="url(#clip-path)"
+          pointerEvents={isOpen ? 'auto' : 'none'}
+        />
+        <rect
+          x={left}
+          y={top}
+          width={width}
+          height={height}
+          pointerEvents="none"
+          fill="transparent"
         />
       </svg>
     </SvgMaskWrapper>

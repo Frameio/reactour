@@ -32,22 +32,10 @@ class Tour extends Component {
   }
 
   componentDidMount() {
-    this.node = document.createElement('div')
-    this.node.className = this.props.portalClassName
-    const parent = getParentElement(this.props.parentSelector)
-    parent.appendChild(this.node)
     this.renderPortal(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
-    const currentParent = getParentElement(this.props.parentSelector)
-    const newParent = getParentElement(nextProps.parentSelector)
-
-    if (newParent !== currentParent) {
-      currentParent.removeChild(this.node)
-      newParent.appendChild(this.node)
-    }
-
     this.renderPortal(nextProps)
   }
 
@@ -61,23 +49,19 @@ class Tour extends Component {
     } else {
       document.body.classList.remove('reactour__body')
     }
-
-    this.portal = renderSubtreeIntoContainer(
-      this,
-      <TourPortal {...props} />,
-      this.node
-    )
   }
 
   removePortal() {
-    ReactDOM.unmountComponentAtNode(this.node)
-    const parent = getParentElement(this.props.parentSelector)
-    parent.removeChild(this.node)
     document.body.classList.remove('reactour__body')
   }
 
   render() {
-    return null
+    const { portalClassName, ...rest } = this.props
+
+    return ReactDOM.createPortal(
+      <TourPortal className={portalClassName} {...rest} />,
+      this.props.parentSelector()
+    )
   }
 }
 
