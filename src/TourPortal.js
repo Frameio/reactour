@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import cn from 'classnames'
 import scrollSmooth from 'scroll-smooth'
 import Scrollparent from 'scrollparent'
@@ -15,6 +16,10 @@ import {
   SvgMask,
 } from './components/index'
 import * as hx from './helpers'
+
+const TourContainer = styled.div`
+  position: fixed;
+`
 
 class TourPortal extends Component {
   static propTypes = {
@@ -425,7 +430,7 @@ class TourPortal extends Component {
     const currentStep = steps[current]
 
     return (
-      <React.Fragment>
+      <TourContainer className={className}>
         <div
           ref={this.maskRef}
           onClick={this.maskClickHandler}
@@ -473,7 +478,7 @@ class TourPortal extends Component {
           current={current}
           style={currentStep.style ? currentStep.style : {}}
           rounded={rounded}
-          className={cn(CN.helper.base, className, {
+          className={cn(CN.helper.base, {
             [CN.helper.isOpen]: isOpen,
           })}
           accentColor={accentColor}
@@ -488,7 +493,7 @@ class TourPortal extends Component {
               })
             : children}
         </Guide>
-      </React.Fragment>
+      </TourContainer>
     )
   }
 }
