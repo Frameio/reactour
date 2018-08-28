@@ -93,6 +93,7 @@ const SecondPulse = FirstPulse.extend`
 
 const Container = styled.div`
   position: relative;
+  opacity: ${props => (!props.hide ? 1 : 0)};
   right: 8px;
   height: 24px;
   width: 24px;

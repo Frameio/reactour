@@ -184,7 +184,7 @@ class Guide extends React.Component {
   }
 
   render() {
-    const { children, pointer, innerRef, ...rest } = this.props
+    const { children, pointer, hideBeacon, innerRef, ...rest } = this.props
     const { coordinates, position } = this.getPositioning()
 
     return (
@@ -196,7 +196,7 @@ class Guide extends React.Component {
         {children}
         {(pointer && React.cloneElement(pointer, { position })) || (
           <PointerContainer position={position}>
-            <Beacon />
+            <Beacon hide={hideBeacon} />
             <Pointer />
           </PointerContainer>
         )}
