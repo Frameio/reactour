@@ -59,6 +59,8 @@ class TourPortal extends Component {
         position: PropTypes.oneOf(['top', 'right', 'bottom', 'left', 'center']),
         action: PropTypes.func,
         style: PropTypes.object,
+        hideBeacon: PropTypes.bool,
+        hideOverlay: PropTypes.bool,
       })
     ),
     pointer: PropTypes.node,
@@ -428,6 +430,7 @@ class TourPortal extends Component {
     } = this.state
 
     const currentStep = steps[current]
+    const { hideOverlay, hideBeacon } = currentStep
 
     return (
       <TourContainer className={className}>
@@ -438,29 +441,32 @@ class TourPortal extends Component {
             [CN.mask.isOpen]: isOpen,
           })}
         >
-          <SvgMask
-            isOpen={isOpen}
-            windowWidth={windowWidth}
-            windowHeight={windowHeight}
-            targetWidth={targetWidth}
-            targetHeight={targetHeight}
-            targetTop={targetTop}
-            targetLeft={targetLeft}
-            padding={maskSpace}
-            rounded={rounded}
-            className={maskClassName}
-            disableInteraction={
-              disableInteraction && steps[current].stepInteraction
-                ? !steps[current].stepInteraction
-                : disableInteraction
-            }
-            disableInteractionClassName={`${
-              CN.mask.disableInteraction
-            } ${highlightedMaskClassName}`}
-          />
+          {!hideOverlay && (
+            <SvgMask
+              isOpen={isOpen}
+              windowWidth={windowWidth}
+              windowHeight={windowHeight}
+              targetWidth={targetWidth}
+              targetHeight={targetHeight}
+              targetTop={targetTop}
+              targetLeft={targetLeft}
+              padding={maskSpace}
+              rounded={rounded}
+              className={maskClassName}
+              disableInteraction={
+                disableInteraction && steps[current].stepInteraction
+                  ? !steps[current].stepInteraction
+                  : disableInteraction
+              }
+              disableInteractionClassName={`${
+                CN.mask.disableInteraction
+              } ${highlightedMaskClassName}`}
+            />
+          )}
         </div>
         <Guide
           isOpen={isOpen}
+          hideBeacon={hideBeacon}
           innerRef={this.guideRef}
           targetHeight={targetHeight}
           targetWidth={targetWidth}
