@@ -82,6 +82,7 @@ const GuideContainer = styled.div`
   top: ${({ coordinates }) => coordinates[1]}px;
   animation: ${({ isOpen }) => (isOpen ? enter : leave)}
   animation-duration: 0.5s;
+  animation-delay: ${({ isOpen }) => (isOpen ? 0.5 : 0)}s
   animation-fill-mode: forwards;
   background-color: #fff;
   border: 1px solid #fff;
