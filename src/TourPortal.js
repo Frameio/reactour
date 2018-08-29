@@ -105,6 +105,7 @@ class TourPortal extends Component {
       height: 0,
       w: 0,
       h: 0,
+      overlayTarget: {},
       inDOM: false,
       observer: null,
     }
@@ -183,6 +184,9 @@ class TourPortal extends Component {
     const { current } = this.state
     const step = steps[current]
     const node = step.selector ? document.querySelector(step.selector) : null
+    const overlayNode = step.overlaySelector
+      ? document.querySelector(step.overlaySelector)
+      : null
 
     const stepCallback = o => {
       if (step.action && typeof step.action === 'function') {
@@ -247,6 +251,20 @@ class TourPortal extends Component {
                     Please check the 'steps' Tour prop Array at position: ${current +
                       1}.`
         )
+    }
+
+    if (overlayNode) {
+      const overlayNodeStateUpdater = setNodeState(
+        overlayNode,
+        this.helper,
+        step.position
+      )
+
+      this.setState({
+        overlayTarget: overlayNodeStateUpdater(),
+      })
+    } else {
+      this.setState({ overlayTarget: {} })
     }
   }
 
@@ -416,6 +434,7 @@ class TourPortal extends Component {
       isOpen,
       current,
       inDOM,
+      overlayTarget,
       top: targetTop,
       right: targetRight,
       bottom: targetBottom,
@@ -446,10 +465,10 @@ class TourPortal extends Component {
               isOpen={isOpen}
               windowWidth={windowWidth}
               windowHeight={windowHeight}
-              targetWidth={targetWidth}
-              targetHeight={targetHeight}
-              targetTop={targetTop}
-              targetLeft={targetLeft}
+              targetWidth={overlayTarget.width || targetWidth}
+              targetHeight={overlayTarget.height || targetHeight}
+              targetTop={overlayTarget.top || targetTop}
+              targetLeft={overlayTarget.left || targetLeft}
               padding={maskSpace}
               rounded={rounded}
               className={maskClassName}
