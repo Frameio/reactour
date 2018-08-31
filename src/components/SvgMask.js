@@ -4,7 +4,7 @@ import * as hx from '../helpers'
 import PropTypes from 'prop-types'
 
 const SvgMaskWrapper = styled.div`
-  opacity: ${({ isOpen }) => (isOpen ? 0.7 : 0)};
+  opacity: ${({ isOpen }) => (isOpen ? 0.5 : 0)};
   transition: opacity 0.3s ease-in-out;
   width: 100%;
   left: 0;

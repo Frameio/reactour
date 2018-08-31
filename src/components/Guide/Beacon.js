@@ -24,20 +24,78 @@ const scaleFade = keyframes`
 `
 
 const BeaconSVG = props => (
-  <svg viewBox="0 0 43 43" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    width="71px"
+    height="71px"
+    viewBox="0 0 71 71"
+    version="1.1"
+    {...props}
+  >
     <defs>
-      <circle id="path-1" cx="34.5" cy="34.5" r="21.5" />
+      <circle id="path-1" cx="49.5" cy="81.5" r="21.5" />
       <filter
-        x="-8.1%"
-        y="-8.1%"
-        width="116.3%"
-        height="116.3%"
+        x="-59.3%"
+        y="-59.3%"
+        width="218.6%"
+        height="218.6%"
         filterUnits="objectBoundingBox"
         id="filter-2"
       >
-        <feGaussianBlur
-          stdDeviation="3.5"
+        <feMorphology
+          radius="3"
+          operator="dilate"
           in="SourceAlpha"
+          result="shadowSpreadOuter1"
+        />
+        <feOffset
+          dx="0"
+          dy="0"
+          in="shadowSpreadOuter1"
+          result="shadowOffsetOuter1"
+        />
+        <feMorphology
+          radius="4"
+          operator="erode"
+          in="SourceAlpha"
+          result="shadowInner"
+        />
+        <feOffset dx="0" dy="0" in="shadowInner" result="shadowInner" />
+        <feComposite
+          in="shadowOffsetOuter1"
+          in2="shadowInner"
+          operator="out"
+          result="shadowOffsetOuter1"
+        />
+        <feGaussianBlur
+          stdDeviation="5.5"
+          in="shadowOffsetOuter1"
+          result="shadowBlurOuter1"
+        />
+        <feColorMatrix
+          values="0 0 0 0 0.356862745   0 0 0 0 0.325490196   0 0 0 0 1  0 0 0 1 0"
+          type="matrix"
+          in="shadowBlurOuter1"
+        />
+      </filter>
+      <filter
+        x="-47.7%"
+        y="-47.7%"
+        width="195.3%"
+        height="195.3%"
+        filterUnits="objectBoundingBox"
+        id="filter-3"
+      >
+        <feMorphology
+          radius="2"
+          operator="erode"
+          in="SourceAlpha"
+          result="shadowSpreadInner1"
+        />
+        <feGaussianBlur
+          stdDeviation="2.5"
+          in="shadowSpreadInner1"
           result="shadowBlurInner1"
         />
         <feOffset
@@ -62,17 +120,36 @@ const BeaconSVG = props => (
       </filter>
     </defs>
     <g
+      id="Player-Onboarding"
       stroke="none"
       strokeWidth="1"
       fill="none"
       fillRule="evenodd"
-      fillOpacity="1"
+      opacity="0.703236607"
     >
-      <g transform="translate(-758.000000, -800.000000)" fill="black">
-        <g transform="translate(745.000000, 787.000000)">
-          <g>
-            <use filter="url(#filter-2)" xlinkHref="#path-1" />
-          </g>
+      <g id="Artboard" transform="translate(-14.000000, -46.000000)">
+        <g id="Oval-5">
+          <use
+            fill="black"
+            fillOpacity="1"
+            filter="url(#filter-2)"
+            xlinkHref="#path-1"
+          />
+          <use
+            fill="black"
+            fillOpacity="1"
+            filter="url(#filter-3)"
+            xlinkHref="#path-1"
+          />
+          <circle
+            strokeOpacity="0"
+            stroke="#5B53FF"
+            strokeWidth="1"
+            strokeLinejoin="square"
+            cx="49.5"
+            cy="81.5"
+            r="21"
+          />
         </g>
       </g>
     </g>
@@ -81,8 +158,8 @@ const BeaconSVG = props => (
 
 const FirstPulse = styled(BeaconSVG)`
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   animation: ${scaleFade} 2s infinite;
 `
 
@@ -95,8 +172,8 @@ const Container = styled.div`
   position: relative;
   opacity: ${props => (!props.hide ? 1 : 0)};
   right: 8px;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
 `
 
 const Beacon = props => (

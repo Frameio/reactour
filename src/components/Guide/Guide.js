@@ -198,7 +198,6 @@ class Guide extends React.Component {
         {(pointer && React.cloneElement(pointer, { position })) || (
           <PointerContainer position={position}>
             <Beacon hide={hideBeacon} />
-            <Pointer />
           </PointerContainer>
         )}
       </GuideContainer>
