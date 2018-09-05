@@ -1,6 +1,6 @@
 {
   "name": "@frameio/reactour",
-  "version": "1.8.12",
+  "version": "1.8.13",
   "description": "Tourist Guide into your React Components",
   "main": "dist/index.js",
   "scripts": {

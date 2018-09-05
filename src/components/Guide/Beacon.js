@@ -164,14 +164,14 @@ const FirstPulse = styled(BeaconSVG)`
 `
 
 const SecondPulse = FirstPulse.extend`
-  position: absolute;
-  animation-delay: 0.5s;
+  animation-delay: 0.7s;
 `
 
 const Container = styled.div`
   position: relative;
   opacity: ${props => (!props.hide ? 1 : 0)};
-  right: 8px;
+  right: 11px;
+  bottom: 3px;
   height: 32px;
   width: 32px;
 `

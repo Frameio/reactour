@@ -74,7 +74,6 @@ const getPointerStyles = position => {
 }
 
 const GuideContainer = styled.div`
-  --reactour-accent: ${props => props.accentColor};
   position: fixed;
   transition: top 0.3s, left 0.3s;
   opacity: 0;
@@ -84,16 +83,21 @@ const GuideContainer = styled.div`
   animation-duration: 0.5s;
   animation-delay: ${({ isOpen }) => (isOpen ? 0.5 : 0)}s
   animation-fill-mode: forwards;
+  z-index: 1000000;
+`
+
+const Guide = styled.div`
+  --reactour-accent: ${props => props.accentColor};
   background-color: #fff;
   border: 1px solid #fff;
   padding: 24px;
   box-shadow: 0 0.5em 3em rgba(0, 0, 0, 0.3);
   color: inherit;
-  z-index: 1000000;
   max-width: 320px;
   min-width: 150px;
   outline: 0;
   border-radius: ${props => props.rounded}px;
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
 `
 
 const PointerContainer = styled.div`
@@ -104,7 +108,7 @@ const PointerContainer = styled.div`
   ${({ position }) => getPointerStyles(position)};
 `
 
-class Guide extends React.Component {
+export default class extends React.Component {
   getPositioning = () => {
     const {
       targetTop,
@@ -185,16 +189,26 @@ class Guide extends React.Component {
   }
 
   render() {
-    const { children, pointer, hideBeacon, innerRef, ...rest } = this.props
+    const {
+      children,
+      pointer,
+      hideBeacon,
+      hideContent,
+      isOpen,
+      innerRef,
+      ...rest
+    } = this.props
     const { coordinates, position } = this.getPositioning()
 
     return (
       <GuideContainer
         innerRef={innerRef}
         coordinates={coordinates}
-        {...rest}
+        isOpen={isOpen}
       >
-        {children}
+        <Guide hide={hideContent} {...rest}>
+          {children}
+        </Guide>
         {(pointer && React.cloneElement(pointer, { position })) || (
           <PointerContainer position={position}>
             <Beacon hide={hideBeacon} />
@@ -204,5 +218,3 @@ class Guide extends React.Component {
     )
   }
 }
-
-export default Guide

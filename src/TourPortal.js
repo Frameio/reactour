@@ -449,7 +449,7 @@ class TourPortal extends Component {
     } = this.state
 
     const currentStep = steps[current]
-    const { hideOverlay, hideBeacon } = currentStep
+    const { hideContent, hideOverlay, hideBeacon } = currentStep
 
     return (
       <TourContainer className={className}>
@@ -485,6 +485,7 @@ class TourPortal extends Component {
         </div>
         <Guide
           isOpen={isOpen}
+          hideContent={hideContent}
           hideBeacon={hideBeacon}
           innerRef={this.guideRef}
           targetHeight={targetHeight}
