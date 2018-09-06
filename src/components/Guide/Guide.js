@@ -37,7 +37,7 @@ const leave = keyframes`
   }
 `
 
-const getPointerStyles = position => {
+const getPositioning = position => {
   switch (position) {
     case 'top': {
       return css`
@@ -73,7 +73,7 @@ const getPointerStyles = position => {
   }
 }
 
-const GuideContainer = styled.div`
+const Guide = styled.div`
   position: fixed;
   transition: top 0.3s, left 0.3s;
   opacity: 0;
@@ -86,7 +86,7 @@ const GuideContainer = styled.div`
   z-index: 1000000;
 `
 
-const Guide = styled.div`
+const Content = styled.div`
   --reactour-accent: ${props => props.accentColor};
   background-color: #fff;
   border: 1px solid #fff;
@@ -97,15 +97,13 @@ const Guide = styled.div`
   min-width: 150px;
   outline: 0;
   border-radius: ${props => props.rounded}px;
-  opacity: ${({ hide }) => (hide ? 0 : 1)};
 `
 
-const PointerContainer = styled.div`
-  display: flex;
+const BeaconContainer = styled.div`
   position: absolute;
   z-index: 1;
   pointer-events: none;
-  ${({ position }) => getPointerStyles(position)};
+  ${({ position }) => getPositioning(position)};
 `
 
 export default class extends React.Component {
@@ -191,7 +189,6 @@ export default class extends React.Component {
   render() {
     const {
       children,
-      pointer,
       hideBeacon,
       hideContent,
       isOpen,
@@ -201,20 +198,14 @@ export default class extends React.Component {
     const { coordinates, position } = this.getPositioning()
 
     return (
-      <GuideContainer
-        innerRef={innerRef}
-        coordinates={coordinates}
-        isOpen={isOpen}
-      >
-        <Guide hide={hideContent} {...rest}>
-          {children}
-        </Guide>
-        {(pointer && React.cloneElement(pointer, { position })) || (
-          <PointerContainer position={position}>
+      <Guide innerRef={innerRef} coordinates={coordinates} isOpen={isOpen}>
+        {!hideContent && <Content {...rest}>{children}</Content>}
+        {!hideBeacon && (
+          <BeaconContainer position={position}>
             <Beacon hide={hideBeacon} />
-          </PointerContainer>
+          </BeaconContainer>
         )}
-      </GuideContainer>
+      </Guide>
     )
   }
 }

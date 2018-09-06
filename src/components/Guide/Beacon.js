@@ -9,7 +9,7 @@ const scaleFade = keyframes`
 
   90% {
     opacity: 0;
-    transform: scale(2.25);
+    transform: scale(3);
   }
 
   95% {

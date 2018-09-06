@@ -18,7 +18,7 @@ import {
 import * as hx from './helpers'
 
 const TourContainer = styled.div`
-  position: fixed;
+  position: absolute;
 `
 
 class TourPortal extends Component {
