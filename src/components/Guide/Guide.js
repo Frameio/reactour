@@ -42,29 +42,29 @@ const getPositioning = position => {
     case 'top': {
       return css`
         transform: rotate(-90deg);
-        left: 0;
-        bottom: -29px;
+        left: -20px;
+        bottom: -64px;
       `
     }
     case 'right': {
       return css`
         transform: rotate(0deg);
-        left: -34px;
-        bottom: 8px;
+        left: -64px;
+        bottom: -10px;
       `
     }
     case 'bottom': {
       return css`
         transform: rotate(90deg);
-        left: 0;
-        top: -29px;
+        left: -20px;
+        top: -64px;
       `
     }
     case 'left': {
       return css`
         transform: rotate(180deg);
-        right: -34px;
-        bottom: 8px;
+        right: -64px;
+        bottom: -10px;
       `
     }
     default: {

@@ -6,17 +6,14 @@ const scaleFade = keyframes`
     opacity: 1;
     transform: scale(1);
   }
-
-  90% {
+  85% {
     opacity: 0;
-    transform: scale(3);
+    transform: scale(4);
   }
-
-  95% {
+  94% {
     opacity: 0;
     transform: scale(1);
   }
-
   100% {
     opacity: 1;
     transform: scale(1);
@@ -158,22 +155,20 @@ const BeaconSVG = props => (
 
 const FirstPulse = styled(BeaconSVG)`
   position: absolute;
-  width: 32px;
-  height: 32px;
-  animation: ${scaleFade} 2s infinite;
+  width: 72px;
+  height: 72px;
+  animation: ${scaleFade} 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) 0s infinite normal none running;
 `
 
 const SecondPulse = FirstPulse.extend`
-  animation-delay: 0.7s;
+  animation-delay: 0.27s;
 `
 
 const Container = styled.div`
   position: relative;
   opacity: ${props => (!props.hide ? 1 : 0)};
-  right: 11px;
-  bottom: 3px;
-  height: 32px;
-  width: 32px;
+  height: 72px;
+  width: 72px;
 `
 
 const Beacon = props => (
