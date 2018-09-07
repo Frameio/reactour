@@ -6,19 +6,12 @@ import Beacon from './Beacon'
 import Pointer from './Pointer'
 
 const enter = keyframes`
-  0% {
+  from {
     opacity: 0;
-    transform: scale(1);
   }
 
-  1% {
-    opacity: 0;
-    transform: scale(1.25);
-  }
-
-  100% {
+  to {
     opacity: 1;
-    transform: scale(1);
   }
 `
 
@@ -34,6 +27,20 @@ const leave = keyframes`
   100% {
     opacity: 0;
     z-index: -1;
+  }
+`
+
+const float = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 `
 
@@ -79,8 +86,7 @@ const Guide = styled.div`
   opacity: 0;
   left: ${({ coordinates }) => coordinates[0]}px;
   top: ${({ coordinates }) => coordinates[1]}px;
-  animation: ${({ isOpen }) => (isOpen ? enter : leave)}
-  animation-duration: 0.5s;
+  animation: ${({ isOpen }) => (isOpen ? enter : leave)} 0.3s ease-in-out;
   animation-delay: ${({ isOpen }) => (isOpen ? 0.5 : 0)}s
   animation-fill-mode: forwards;
   z-index: 1000000;
@@ -97,6 +103,7 @@ const Content = styled.div`
   min-width: 150px;
   outline: 0;
   border-radius: ${props => props.rounded}px;
+  animation: ${float} 4s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 `
 
 const BeaconContainer = styled.div`
